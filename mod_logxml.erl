@@ -212,8 +212,8 @@ receive_packet(_JID, From, To, P) ->
     ?DEBUG("receive_packet Proc: ~p",[Proc]),
     ?DEBUG("receive_packet From: ~p",[From]),
     ?DEBUG("receive_packet To: ~p",[To]),
-    ?DEBUG("receive_packet P: ~p",[P]).
-    % Proc ! {addlog, {recv, From, To, P}}.
+    ?DEBUG("receive_packet P: ~p",[P]),
+     Proc ! {addlog, {recv, From, To, P}}.
 
 add_log(Io, Timezone, ShowIP, {Orientation, From, To, Packet}, _OSD) ->
     %%{Orientation, Stanza, Direction} = OSD, 
