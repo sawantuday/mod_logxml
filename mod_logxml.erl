@@ -137,11 +137,17 @@ filter(FilterO, E) ->
 	end,
     ?DEBUG("Stanza_str after: ~p",[Stanza]),
 
-    Hosts_all = ejabberd_config:get_global_option(hosts),
+    Hosts_all = ejabberd_config:get_myhosts(),
+    ?DEBUG("Hosts_all after: ~p",[Hosts_all]),
+
     {Host_local, Host_remote} = case Orientation of
 				    send -> {From#jid.lserver, To#jid.lserver};
 				    recv -> {To#jid.lserver, From#jid.lserver}
 				end,
+
+    ?DEBUG("Host_local : ~p",[Host_local]),
+    ?DEBUG("Host_remote : ~p",[Host_remote]),
+
     Direction = case Host_remote of
 		    Host_local -> internal;
 		    _ -> 
@@ -225,9 +231,15 @@ add_log(Io, Timezone, ShowIP, {Orientation, From, To, Packet}, _OSD) ->
 		   false -> ""
 	       end,
     TimestampISO = get_now_iso(Timezone),
+        ?DEBUG("Packet: ~p",[Packet]),
+        ?DEBUG("Packet binary_to_list: ~p",[xml:element_to_binary(Packet)]),
+
+    % Test = xml:element_to_string(Packet),
+    % ?DEBUG("Test : ~p",[Test]),
+
     io:fwrite(Io, "<packet or=\"~p\" ljid=\"~s\" ~sts=\"~s\">~s</packet>~n",
 	      [Orientation, jlib:jid_to_string(LocalJID), LocalIPS,
-	       TimestampISO, xml:element_to_string(Packet)]).
+	       TimestampISO, xml:element_to_binary(Packet)]).
 
 %% -------------------
 %% File
