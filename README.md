@@ -1,7 +1,7 @@
 mod_logxml
 ==========
 
-mod_logxml for ejabberd 13.12
+mod_logxml for ejabberd 13.12 - log all packets to xml file.
 
 
 Sample configuration in yml syntax 
